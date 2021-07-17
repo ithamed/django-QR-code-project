@@ -6,7 +6,7 @@ from django.core.files import File
 from PIL import Image
 # Create your models here.
 
-class Website(models.Model):
+class Course_session(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     date = models.DateField(default='2000-01-01')
@@ -26,9 +26,9 @@ class Website(models.Model):
         canvas.close()
         super().save(*args, **kwargs)
 
-class Student(models.Model):
+class Student_presence(models.Model):
     id = models.AutoField(primary_key=True)
-    website = models.ForeignKey(Website, on_delete=models.CASCADE)
+    course_session = models.ForeignKey(Course_session, on_delete=models.CASCADE)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
