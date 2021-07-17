@@ -17,9 +17,9 @@
   </head>
   <body>
     <div class="ui container">
-    {% for obj in objs %}
-      <h1><a href="/students">welcome to - {{obj.name}} - {{obj.date}}</a></h1>
-      <a href="{% url 'register' obj.id %}"><img src={{obj.qr_code.url}}></a>
+    {% for session in sessions %}
+      <h1><a href="{% url 'list' session.id %}">Show - {{session.name}} - {{session.date}}</a></h1>
+      <a href="{% url 'register' session.id %}"><img src={{session.qr_code.url}}></a>
     {% endfor %}
     </div>
 

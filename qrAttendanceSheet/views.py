@@ -7,25 +7,26 @@ from qrAttendanceSheet.forms import Student_presenceForm
 def home_view(request):
     # name = "Welcome to"
 
-    objs = Course_session.objects.all()
+    sessions = Course_session.objects.all()
     # objs = Website.objects.all()
 
 
     context = {
-        'objs' : objs,
+        'sessions' : sessions,
     }
     
 
     return render(request, 'home.html', context)
 
-def register(request, obj):
+def register(request, session_id):
     current_user = request.user
     user = {
         'current_user' : current_user,
-        'obj' : obj,
+        'obj' : session_id,
     }
     if request.POST:
-        course_session = Course_session.objects.get(id=obj)
+        course_session = Course_session.objects.get(id=session_id)
+        # print(" %%%%%%%%%%   ", course_session)
         student = Student_presence(course_session= course_session, student = request.user)
         student.save()
         return render(request, 'registered.html', user)
@@ -33,8 +34,10 @@ def register(request, obj):
         print(request.body)
         return render(request, 'register.html', user)
 
-def student(request): #this is all records from Student_presence 
-    students = Student_presence.objects.all()
+
+#renders all records from Student_presence from specific session
+def student(request, session_id): 
+    students = Student_presence.objects.filter(course_session=session_id) 
     std = {
         'students' : students,
     }
