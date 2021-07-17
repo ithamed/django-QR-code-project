@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from django.db import models
 import qrcode
 from io import BytesIO
@@ -6,11 +6,24 @@ from django.core.files import File
 from PIL import Image
 # Create your models here.
 
-class Website(models.Model):
+class Course_session(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
-    date = models.DateField(default='2000-01-01')
-    qr_code = models.ImageField(upload_to='qr_codes', blank=True)
+    date = models.DateField(default='2000-01-01') #should be deleted later
+    
+
+    #this line should be deleted later, and then we can make qr code just when de user asked for that. so we don't save qr in DB and using less storage
+    qr_code = models.ImageField(upload_to='qr_codes', blank=True) 
+
+
+
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    create_at =  models.DateTimeField(auto_now_add=True)
+    valid_from =  models.DateTimeField()
+    valid_to =  models.DateTimeField()
+
+
 
     def __str__(self):
         return str(self.name) 
@@ -26,9 +39,9 @@ class Website(models.Model):
         canvas.close()
         super().save(*args, **kwargs)
 
-class Student(models.Model):
+class Student_presence(models.Model):
     id = models.AutoField(primary_key=True)
-    website = models.ForeignKey(Website, on_delete=models.CASCADE)
+    course_session = models.ForeignKey(Course_session, on_delete=models.CASCADE)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
