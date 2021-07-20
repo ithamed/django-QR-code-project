@@ -3,10 +3,12 @@ from qrAttendanceSheet.models import Course_session, Student_presence
 # from qrAttendanceSheet.models import Website, Student
 from django.contrib.auth.models import User
 from qrAttendanceSheet.forms import Student_presenceForm
+from django.http import HttpResponse, HttpResponseRedirect
+
 
 def home_view(request):
     # name = "Welcome to"
-
+    
     sessions = Course_session.objects.all()
     # objs = Website.objects.all()
 
@@ -25,9 +27,14 @@ def register(request, session_id):
     if request.POST:
         course_session = Course_session.objects.get(id=session_id)
         # print(" %%%%%%%%%%   ", course_session)
-        student = Student_presence(course_session= course_session, student = request.user)
-        student.save()
-        return render(request, 'qrAttendanceSheet/registered.html', user)
+        try:
+            student = Student_presence(course_session= course_session, student = request.user)
+            student.save()
+            return render(request, 'qrAttendanceSheet/registered.html', user)
+        except:
+            # later a proper message or page should come instead
+            return HttpResponse("you are already registered")
+            
     else:
         # print(request.body)
         return render(request, 'qrAttendanceSheet/register.html', user)

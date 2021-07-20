@@ -19,6 +19,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
+                    <th>Entrance time</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,8 +27,10 @@
             
                 <tr>
                     <td>{{student.student.first_name}}</td>
-                    <td class="single line">{{student.student.last_name}}</td>
-                    <td class="single line">{{student}}</td>
+                    <td>{{student.student.last_name}}</td>
+                    <td>{{student}}</td>
+                    <td>{{student.entrance_time}}</td>
+
                 </tr>
                 {% endfor %}
             </tbody>
