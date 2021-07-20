@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"
+        />
+        <title>Document</title>
+    </head>
+    <body>
+        <h2 class="ui center aligned header">{{ session.name }}-{{ session.date }}  from  {{ session.group }}</h2>
+        <table class="ui celled padded table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+            
+                <tr>
+                    <td>{{student.student.first_name}}</td>
+                    <td class="single line">{{student.student.last_name}}</td>
+                    <td class="single line">{{student}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="5">
+                        some text
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </body>
+</html>

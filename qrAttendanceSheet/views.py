@@ -14,9 +14,7 @@ def home_view(request):
     context = {
         'sessions' : sessions,
     }
-    
-
-    return render(request, 'home.html', context)
+    return render(request, 'qrAttendanceSheet/home.html', context)
 
 def register(request, session_id):
     current_user = request.user
@@ -29,18 +27,20 @@ def register(request, session_id):
         # print(" %%%%%%%%%%   ", course_session)
         student = Student_presence(course_session= course_session, student = request.user)
         student.save()
-        return render(request, 'registered.html', user)
+        return render(request, 'qrAttendanceSheet/registered.html', user)
     else:
-        print(request.body)
-        return render(request, 'register.html', user)
+        # print(request.body)
+        return render(request, 'qrAttendanceSheet/register.html', user)
 
 
 #renders all records from Student_presence from specific session
 def student(request, session_id): 
-    students = Student_presence.objects.filter(course_session=session_id) 
+    students = Student_presence.objects.filter(course_session=session_id)
+    session = Course_session.objects.get(id=session_id) 
     std = {
         'students' : students,
+        'session': session
     }
-    print(students)
+    print("ine?",students)
 
-    return render(request, 'students.html', std)
+    return render(request, 'qrAttendanceSheet/students.html', std)

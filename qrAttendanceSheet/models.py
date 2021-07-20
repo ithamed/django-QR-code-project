@@ -4,13 +4,12 @@ import qrcode
 from io import BytesIO
 from django.core.files import File
 from PIL import Image
-# Create your models here.
 
 class Course_session(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     date = models.DateField(default='2000-01-01') #should be deleted later
-    
+
 
     #this line should be deleted later, and then we can make qr code just when de user asked for that. so we don't save qr in DB and using less storage
     qr_code = models.ImageField(upload_to='qr_codes', blank=True) 
@@ -22,8 +21,6 @@ class Course_session(models.Model):
     create_at =  models.DateTimeField(auto_now_add=True)
     valid_from =  models.DateTimeField()
     valid_to =  models.DateTimeField()
-
-
 
     def __str__(self):
         return str(self.name) 
